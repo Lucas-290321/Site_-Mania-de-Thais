@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif;
+  overflow-x: clip;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  :root {
+    /* Deep blue-black background */
+    --background: 230 50% 4%;
+    --foreground: 0 0% 96%;
+    
+    /* Dark with purple tint */
+    --card: 260 40% 8%;
+    --card-foreground: 0 0% 96%;
+    --popover: 260 40% 8%;
+    --popover-foreground: 0 0% 96%;
+    
+    /* Neon purple */
+    --primary: 271 80% 60%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Magenta */
+    --secondary: 320 80% 50%;
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Dark purple */
+    --muted: 260 30% 15%;
+    --muted-foreground: 260 20% 75%;
+    
+    /* Golden orange */
+    --accent: 35 100% 55%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Subtle purple */
+    --border: 260 30% 20%;
+    --input: 260 30% 20%;
+    --ring: 271 80% 60%;
+    --radius: 1rem;
+    
+    /* Cosmic specific tokens */
+    --cosmic-deep: 230 50% 4%;
+    --cosmic-purple: 260 50% 8%;
+    --neon-purple: 271 80% 60%;
+    --magenta-glow: 320 80% 50%;
+    --golden-orange: 35 100% 55%;
+  }
+}
+
+@layer components {
+  .font-serif-display {
+    font-family: "Cinzel", serif;
+  }
+  
+  .font-serif-elegant {
+    font-family: "Cormorant Garamond", serif;
+  }
+  
+  .font-script {
+    font-family: "Dancing Script", cursive;
+  }
+  
+  .cosmic-bg {
+    background: radial-gradient(ellipse at top, hsl(var(--cosmic-purple)) 0%, hsl(var(--cosmic-deep)) 70%);
+    position: relative;
+  }
+  
+  .cosmic-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at 20% 30%, hsl(var(--neon-purple) / 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, hsl(var(--magenta-glow) / 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, hsl(var(--golden-orange) / 0.03) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .blur-bg {
+    backdrop-filter: blur(12px);
+    background: hsl(var(--cosmic-deep) / 0.8);
+  }
+
+  .glow-border-purple {
+    border: 1px solid hsl(var(--neon-purple) / 0.3);
+    box-shadow: 0 0 20px hsl(var(--neon-purple) / 0.1),
+                inset 0 0 20px hsl(var(--neon-purple) / 0.05);
+  }
+
+  .glow-border-orange {
+    border: 1px solid hsl(var(--golden-orange) / 0.3);
+    box-shadow: 0 0 20px hsl(var(--golden-orange) / 0.1),
+                inset 0 0 20px hsl(var(--golden-orange) / 0.05);
+  }
+
+  .scale-glow {
+    transition: all 0.3s ease;
+  }
+  
+  .scale-glow:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px hsl(var(--neon-purple) / 0.2),
+                inset 0 0 20px hsl(var(--neon-purple) / 0.1);
+    border-color: hsl(var(--neon-purple) / 0.5);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite linear;
+}
