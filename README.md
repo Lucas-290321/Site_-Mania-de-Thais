@@ -1,2 +1,2 @@
-# Site_-Mania-de-Thais
+# Mania-de-Thais
 Site de astrologia 
