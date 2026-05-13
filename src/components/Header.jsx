@@ -55,7 +55,7 @@ function Header() {
                 className="font-cormorant text-[26px] lg:text-[28px] tracking-[2px] text-[#d8a547] notranslate"
                 translate="no"
               >
-                LIMA THAILANDESA
+                Thais Lima
               </h1>
 
               <p
