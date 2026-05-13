@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Menu, X } from 'lucide-react';
 
 function Header() {
@@ -9,58 +9,59 @@ function Header() {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
-
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Início', href: '/' },
-    { name: 'Sobre', href: '/sobre' },
-    { name: 'Serviços', href: '/servicos' },
-    { name: 'Conteúdos', href: '/conteudos' },
-    { name: 'Depoimentos', href: '/depoimentos' },
-    { name: 'Contato', href: '/contato' }
+    { name: 'INÍCIO', href: '/' },
+    { name: 'SOBRE', href: '/sobre' },
+    { name: 'SERVIÇOS', href: '/servicos' },
+    { name: 'CONTEÚDOS', href: '/conteudos' },
+    { name: 'DEPOIMENTOS', href: '/depoimentos' },
+    { name: 'CONTATO', href: '/contato' }
   ];
 
   return (
     <motion.header
-      translate="no"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'blur-bg border-b border-white/10' : 'bg-transparent'
-      }`}
-      initial={{ y: -100 }}
+      initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'backdrop-blur-md border-b border-[#d8a547]/20 shadow-[0_4px_30px_rgba(0,0,0,.45)]'
+          : ''
+      }`}
+      style={{
+        backgroundImage: `
+          linear-gradient(rgba(6,3,18,.93), rgba(6,3,18,.93)),
+          url('https://images.unsplash.com/photo-1502139214982-d0ad755818d8?q=80&w=1600')
+        `,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
+        <div className="h-[78px] flex items-center justify-between">
 
-          {/* Logo */}
-          <Link
-            to="/"
-            className="flex items-center gap-2 group"
-            translate="no"
-          >
-            <Sun className="w-6 h-6 text-[hsl(var(--golden-orange))] transition-transform duration-300 group-hover:rotate-90" />
+          {/* LOGO */}
+          <Link to="/" className="flex items-center gap-3 select-none">
+            <Sun className="w-7 h-7 text-[#d8a547]" strokeWidth={1.3} />
 
-            <span
-              className="font-serif-display text-xl font-bold text-white tracking-wider notranslate"
-              translate="no"
-            >
-              MANIA DE THAIS
-            </span>
+            <div className="leading-none">
+              <h1 className="font-cormorant text-[26px] lg:text-[28px] tracking-[2px] text-[#d8a547]">
+                THAIS LIMA
+              </h1>
+
+              <p className="font-cormorant text-[9px] lg:text-[10px] tracking-[2.5px] text-[#d8a547]/75 mt-[2px]">
+                ASTROLOGIA & AUTOCONHECIMENTO
+              </p>
+            </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav
-            className="hidden lg:flex items-center gap-8"
-            translate="no"
-          >
+          {/* DESKTOP MENU */}
+          <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.href;
 
@@ -68,19 +69,16 @@ function Header() {
                 <Link
                   key={link.name}
                   to={link.href}
-                  translate="no"
-                  className={`text-sm font-medium transition-colors duration-200 relative group ${
+                  className={`relative text-[11px] tracking-[1.8px] font-medium transition-all duration-300 ${
                     isActive
-                      ? 'text-[hsl(var(--golden-orange))]'
-                      : 'text-white/80 hover:text-white'
+                      ? 'text-[#d8a547]'
+                      : 'text-white/85 hover:text-[#d8a547]'
                   }`}
                 >
-                  <span className="notranslate" translate="no">
-                    {link.name}
-                  </span>
+                  {link.name}
 
                   <span
-                    className={`absolute -bottom-1 left-0 h-0.5 bg-[hsl(var(--golden-orange))] transition-all duration-300 ${
+                    className={`absolute left-0 -bottom-[10px] h-[1px] bg-[#d8a547] transition-all duration-300 ${
                       isActive ? 'w-full' : 'w-0 group-hover:w-full'
                     }`}
                   />
@@ -89,23 +87,18 @@ function Header() {
             })}
           </nav>
 
-          {/* CTA Button */}
+          {/* CTA */}
           <Link
             to="/contato"
-            translate="no"
-            className="hidden lg:block px-6 py-2.5 bg-[hsl(var(--golden-orange))] text-white font-semibold text-sm rounded-lg transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--golden-orange)/0.5)] hover:scale-105 active:scale-95"
+            className="hidden lg:flex items-center justify-center px-7 py-3 rounded-full bg-[#c89235] text-[#1a0c05] font-semibold text-[11px] tracking-[1.4px] uppercase shadow-[0_8px_20px_rgba(201,146,53,.25)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_18px_rgba(201,146,53,.55)]"
           >
-            <span className="notranslate" translate="no">
-              AGENDE SUA LEITURA
-            </span>
+            ✦ AGENDAR LEITURA ✦
           </Link>
 
-          {/* Mobile Menu Button */}
+          {/* MOBILE BUTTON */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden text-white p-2"
-            aria-label="Toggle menu"
-            translate="no"
+            className="lg:hidden text-[#d8a547] p-2"
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -116,51 +109,48 @@ function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="lg:hidden blur-bg border-t border-white/10"
-          translate="no"
-        >
-          <nav className="px-4 py-6 space-y-4">
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.href;
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25 }}
+            className="lg:hidden bg-[#090313]/95 backdrop-blur-xl border-t border-[#d8a547]/20"
+          >
+            <nav className="px-6 py-6 flex flex-col gap-5">
 
-              return (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  translate="no"
-                  className={`block transition-colors duration-200 py-2 ${
-                    isActive
-                      ? 'text-[hsl(var(--golden-orange))] font-semibold'
-                      : 'text-white/80 hover:text-white'
-                  }`}
-                >
-                  <span className="notranslate" translate="no">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.href;
+
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`text-sm tracking-[1.5px] transition ${
+                      isActive
+                        ? 'text-[#d8a547]'
+                        : 'text-white/85'
+                    }`}
+                  >
                     {link.name}
-                  </span>
-                </Link>
-              );
-            })}
+                  </Link>
+                );
+              })}
 
-            <Link
-              to="/contato"
-              onClick={() => setIsMobileMenuOpen(false)}
-              translate="no"
-              className="block w-full px-6 py-3 bg-[hsl(var(--golden-orange))] text-white font-semibold text-sm rounded-lg text-center transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--golden-orange)/0.5)]"
-            >
-              <span className="notranslate" translate="no">
-                AGENDE SUA LEITURA
-              </span>
-            </Link>
-          </nav>
-        </motion.div>
-      )}
+              <Link
+                to="/contato"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="mt-4 py-3 rounded-full bg-[#c89235] text-center text-[#1a0c05] font-semibold tracking-wide"
+              >
+                AGENDAR LEITURA
+              </Link>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }
